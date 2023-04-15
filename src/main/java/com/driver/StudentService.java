@@ -34,7 +34,7 @@ public class StudentService {
         return studentRepository.getStudentsByTeacherName(teacherName);
     }
 
-    public List<Student> getAllStudents() {
+    public List<String> getAllStudents() {
         return studentRepository.getAllStudents();
     }
 

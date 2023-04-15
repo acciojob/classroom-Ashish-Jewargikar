@@ -2,17 +2,15 @@ package com.driver;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
+
 
 @Repository
 public class StudentRepository {
 
-    private Map<String, Student> students = new HashMap<>();
-    private Map<String, Teacher> teachers = new HashMap<>();
-    private Map<String, List<String>> teacherToStudents = new HashMap<>();
+    private  Map<String, Student> students = new HashMap<>();
+    private  Map<String, Teacher> teachers = new HashMap<>();
+    private Map<String, List<String>> studentTeacherPairs = new HashMap<>();
 
     public void addStudent(Student student) {
         students.put(student.getName(), student);
@@ -23,9 +21,9 @@ public class StudentRepository {
     }
 
     public void addStudentTeacherPair(String studentName, String teacherName) {
-        List<String> students = teacherToStudents.getOrDefault(teacherName, List.of());
-        students.add(studentName);
-        teacherToStudents.put(teacherName, students);
+        List<String> teacherList = studentTeacherPairs.getOrDefault(studentName, new ArrayList<>());
+        teacherList.add(teacherName);
+        studentTeacherPairs.put(studentName, teacherList);
     }
 
     public Student getStudentByName(String name) {
@@ -37,20 +35,21 @@ public class StudentRepository {
     }
 
     public List<String> getStudentsByTeacherName(String teacherName) {
-        return teacherToStudents.getOrDefault(teacherName, List.of());
+        List<String> studentList = studentTeacherPairs.get(teacherName);
+        return studentList != null ? studentList : Collections.emptyList();
     }
 
     public List<Student> getAllStudents() {
-        return students.values().stream().collect(Collectors.toList());
+        return new ArrayList<>(students.values());
     }
 
-    public void deleteTeacherByName(String name) {
-        teachers.remove(name);
-        teacherToStudents.remove(name);
+    public void deleteTeacherByName(String teacherName) {
+        teachers.remove(teacherName);
+        studentTeacherPairs.entrySet().removeIf(entry -> entry.getValue().contains(teacherName));
     }
 
     public void deleteAllTeachers() {
         teachers.clear();
-        teacherToStudents.clear();
+        studentTeacherPairs.clear();
     }
 }

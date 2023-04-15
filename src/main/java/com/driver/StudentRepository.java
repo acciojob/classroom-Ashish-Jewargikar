@@ -63,32 +63,35 @@ public class StudentRepository {
         return studentsList;
     }
     public void deleteTeacherByName(String teacherName){
-        if (teacherDb.containsKey(teacherName)) {
-            teacherDb.remove(teacherName);
-        }
-        if (teacherStudentDb.containsKey(teacherName)) {
-            for (String student : teacherStudentDb.get(teacherName)) {
-                if(studentDb.containsKey(student)) {
-                    studentDb.remove(student);
-                }
-            }
-            teacherStudentDb.remove(teacherName);
-        }
-
-
+//        if (teacherDb.containsKey(teacherName)) {
+//            teacherDb.remove(teacherName);
+//        }
+//        if (teacherStudentDb.containsKey(teacherName)) {
+//            for (String student : teacherStudentDb.get(teacherName)) {
+//                if(studentDb.containsKey(student)) {
+//                    studentDb.remove(student);
+//                }
+//            }
+//            teacherStudentDb.remove(teacherName);
+//        }
+//
+        teacherDb.remove(teacherName);
+        teacherStudentDb.remove(teacherName);
     }
     public void deleteAllTeachers(){
-        for(String teacherName:teacherDb.keySet()){
-            teacherDb.remove(teacherName);
-            if (teacherStudentDb.containsKey(teacherName)) {
-                for (String student : teacherStudentDb.get(teacherName)) {
-                    if(studentDb.containsKey(student)) {
-                        studentDb.remove(student);
-                    }
-                }
-                teacherStudentDb.remove(teacherName);
-            }
-        }
+//        for(String teacherName:teacherDb.keySet()){
+//            teacherDb.remove(teacherName);
+//            if (teacherStudentDb.containsKey(teacherName)) {
+//                for (String student : teacherStudentDb.get(teacherName)) {
+//                    if(studentDb.containsKey(student)) {
+//                        studentDb.remove(student);
+//                    }
+//                }
+//                teacherStudentDb.remove(teacherName);
+//            }
+//        }
+//        teacherStudentDb.clear();
+        teacherDb.clear();
         teacherStudentDb.clear();
     }
 }

@@ -2,10 +2,10 @@ package com.driver;
 
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Repository
 public class StudentRepository {
@@ -41,11 +41,7 @@ public class StudentRepository {
     }
 
     public List<Student> getAllStudents() {
-        List<Student> studentList = new ArrayList<>();
-        for (Student student : students.values()) {
-            studentList.add(student);
-        }
-        return studentList;
+        return students.values().stream().collect(Collectors.toList());
     }
 
     public void deleteTeacherByName(String name) {
